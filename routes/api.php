@@ -12,7 +12,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+//Route::post('/registro', [RegisterController::class, 'register'])->middleware('auth:sanctum');
+//Route::post('/login', [RegisterController::class, 'login'])->middleware('auth:sanctum');
+Route::post('/registro', [RegisterController::class, 'register']);
+
+Route::post('/login', [RegisterController::class, 'login']);
 Route::group(['prefix' => 'tareas'], function () {
+
+});
+
+
+Route::group(['prefix' => 'tareas', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [TareaController::class, 'index']); // Listar tareas
     Route::post('/', [TareaController::class, 'store']); // Crear tarea
     Route::get('/{id}', [TareaController::class, 'show']); // Mostrar tarea específica
@@ -21,6 +31,10 @@ Route::group(['prefix' => 'tareas'], function () {
 });
 
 Route::group(['prefix' => 'empresas'], function () {
+
+});
+
+Route::group(['prefix' => 'empresas', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [EmpresaController::class, 'index']);
     Route::post('/', [EmpresaController::class, 'store']);
     Route::get('/{id}', [EmpresaController::class, 'show']);
@@ -29,6 +43,10 @@ Route::group(['prefix' => 'empresas'], function () {
 });
 
 Route::group(['prefix' => 'archivos'], function () {
+
+});
+
+Route::group(['prefix' => 'archivos', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [ArchivoController::class, 'index']); // Listar todos los archivos
     Route::post('/', [ArchivoController::class, 'store']); // Crear un nuevo archivo
     Route::get('/{id}', [ArchivoController::class, 'show']); // Mostrar un archivo específico por ID
@@ -37,6 +55,11 @@ Route::group(['prefix' => 'archivos'], function () {
 });
 
 Route::group(['prefix' => 'tags'], function () {
+
+});
+
+
+Route::group(['prefix' => 'tags', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [TagController::class, 'index']);
     Route::post('/', [TagController::class, 'store']);
     Route::get('/{id}', [TagController::class, 'show']);
@@ -44,8 +67,7 @@ Route::group(['prefix' => 'tags'], function () {
     Route::delete('/{id}', [TagController::class, 'destroy']);
 });
 
-Route::post('/registro', [RegisterController::class, 'register']);
 
-Route::post('/login', [RegisterController::class, 'login']);
+
 
 
